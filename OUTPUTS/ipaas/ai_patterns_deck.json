@@ -1,0 +1,1110 @@
+{
+ "family": "AI",
+ "prefix": "ai",
+ "platform": "Snowflake",
+ "researchDate": "September 2026",
+ "capabilitiesFile": "OUTPUTS/ipaas/ai_capabilities_scoring_templates.md",
+ "patterns": [
+  {
+   "name": "Agent Platforms",
+   "tag": "Governed agent lifecycle, PHI guardrails, HITL for clinical and claims",
+   "report": "OUTPUTS/ipaas/compare_agent_platform_vendors.md",
+   "features": [
+    {
+     "name": "Agent Lifecycle Management",
+     "lookFor": "Versioning, dev/test/prod promotion, approval gates, rollback, central agent catalog",
+     "why": "Turns pilot sprawl into a governed portfolio"
+    },
+    {
+     "name": "Model Choice & Portability",
+     "lookFor": "Multi-provider models, per-agent selection, easy swaps, own-tenant/VPC deployment",
+     "why": "Avoids model lock-in; protects cost and leverage"
+    },
+    {
+     "name": "Enterprise & Healthcare Connectors",
+     "lookFor": "Permission-aware connectors: Snowflake, SharePoint, CRM, ITSM, FHIR/EHR, claims",
+     "why": "Governed data access cuts integration effort"
+    },
+    {
+     "name": "Open Interoperability (MCP/A2A)",
+     "lookFor": "Consume/expose MCP tools, A2A agent collaboration, OpenAPI/REST actions",
+     "why": "Reusable tools; agents collaborate across platforms"
+    },
+    {
+     "name": "Agent Identity & Least Privilege",
+     "lookFor": "IdP-registered agents, OAuth on-behalf-of, scoped tool permissions, vaulted secrets",
+     "why": "Prevents PHI over-exposure; makes access auditable"
+    },
+    {
+     "name": "Guardrails & HIPAA/PHI Safety",
+     "lookFor": "PHI redaction, prompt-injection defense, grounding checks, signed BAA, residency",
+     "why": "Lets pilots pass privacy and compliance review"
+    },
+    {
+     "name": "Human-in-the-Loop Controls",
+     "lookFor": "Approval steps, confidence thresholds, escalation, per-agent autonomy levels",
+     "why": "Safe automation; humans own consequential decisions"
+    },
+    {
+     "name": "Evaluation & Quality Gates",
+     "lookFor": "Eval datasets, LLM-as-judge, regression tests, red-teaming, CI/CD gates",
+     "why": "Evidence-based scaling; supports model-risk governance"
+    },
+    {
+     "name": "Observability & Audit Trail",
+     "lookFor": "Step-level traces, tokens/cost/latency, OpenTelemetry export, immutable action logs",
+     "why": "Debug failures; prove actions for HIPAA audit"
+    },
+    {
+     "name": "FinOps & Domain Isolation",
+     "lookFor": "Cost attribution by agent/domain, budgets, quotas, isolated domain workspaces",
+     "why": "Keeps consumption costs sustainable; enables federated adoption"
+    }
+   ],
+   "columns": [
+    {
+     "name": "Copilot Studio",
+     "kind": "vendor"
+    },
+    {
+     "name": "Microsoft Foundry Agent Service",
+     "kind": "vendor"
+    },
+    {
+     "name": "AWS Bedrock AgentCore",
+     "kind": "vendor"
+    },
+    {
+     "name": "Google Gemini Ent. Agent Platform",
+     "kind": "vendor"
+    },
+    {
+     "name": "Ref: Snowflake Cortex Agents",
+     "kind": "platformRef"
+    }
+   ],
+   "rows": [
+    [
+     "3",
+     "3",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "2",
+     "3",
+     "4",
+     "4",
+     "3"
+    ],
+    [
+     "3",
+     "3",
+     "2",
+     "3",
+     "3"
+    ],
+    [
+     "3",
+     "4",
+     "3",
+     "4",
+     "3"
+    ],
+    [
+     "3",
+     "4",
+     "4",
+     "3",
+     "3"
+    ],
+    [
+     "3",
+     "3",
+     "4",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "2",
+     "2",
+     "1"
+    ],
+    [
+     "2",
+     "4",
+     "3",
+     "4",
+     "2"
+    ],
+    [
+     "2",
+     "3",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "3",
+     "3"
+    ]
+   ],
+   "totals": [
+    "67.5%",
+    "82.5%",
+    "77.5%",
+    "80.0%",
+    "60.0%"
+   ],
+   "takeaway": "Microsoft Foundry Agent Service (82.5%) is the best fit as the pro-code runtime, paired with Copilot Studio as the governed low-code front door under shared Entra Agent ID and Agent 365 governance. Google Gemini Enterprise Agent Platform (80.0%) and AWS Bedrock AgentCore (77.5%, portability and guardrail leader) are close alternatives and exception paths; the small gap means cloud alignment should decide. Key risks are unconfirmed BAA scope for Foundry Agent Service and partner models, Azure runtime lock-in, and roadmap churn across all vendors.",
+   "platformNote": ""
+  },
+  {
+   "name": "Agent Frameworks",
+   "tag": "Durable, model-agnostic orchestration for multi-step prior-auth and care workflows",
+   "report": "OUTPUTS/ipaas/compare_agent_framework_vendors.md",
+   "features": [
+    {
+     "name": "Stateful Orchestration & Durability",
+     "lookFor": "Graphs/state machines, checkpoints, resume-after-failure, long runs, deterministic replay",
+     "why": "Multi-day healthcare workflows must survive restarts"
+    },
+    {
+     "name": "Model-Agnostic Abstractions",
+     "lookFor": "Multi-provider models, structured outputs, streaming; config-only model swaps",
+     "why": "Protects code investment as models and pricing change"
+    },
+    {
+     "name": "MCP / A2A Tool Protocols",
+     "lookFor": "Consume MCP servers, expose agents via MCP/A2A, typed tools",
+     "why": "Plugs into enterprise tools without bespoke glue"
+    },
+    {
+     "name": "Multi-Agent Patterns",
+     "lookFor": "Supervisor/worker, hand-off, hierarchical, parallel fan-out composition",
+     "why": "Decomposes complex domains; reusable patterns cut defects"
+    },
+    {
+     "name": "Memory & Context Management",
+     "lookFor": "Short/long-term memory, pluggable stores, summarization, PHI-aware retention",
+     "why": "Improves quality and cost; keeps state HIPAA-compliant"
+    },
+    {
+     "name": "Human-in-the-Loop Interrupts",
+     "lookFor": "Native interrupt/resume to pause for review, edits, continue",
+     "why": "Enables graduated autonomy on consequential healthcare actions"
+    },
+    {
+     "name": "Testing & Debuggability",
+     "lookFor": "Test harnesses, model/tool mocks, eval hooks, visual debugging, reproducibility",
+     "why": "Scales many agents safely; cuts rework after upgrades"
+    },
+    {
+     "name": "OpenTelemetry-Native Tracing",
+     "lookFor": "GenAI-convention OTel spans exportable to any backend",
+     "why": "Portable, unified observability; no per-team monitoring silo"
+    },
+    {
+     "name": "Deployment Portability & Security",
+     "lookFor": "Containers/K8s/serverless anywhere; sandboxed execution; vaulted secrets; supply-chain hygiene",
+     "why": "Runs near sensitive data; passes security review"
+    },
+    {
+     "name": "Ecosystem Maturity & LTS",
+     "lookFor": "Community, license, backing, release cadence, stable APIs, commercial support",
+     "why": "Avoids costly rewrites from churn or abandonment"
+    }
+   ],
+   "columns": [
+    {
+     "name": "Microsoft AutoGen",
+     "kind": "vendor"
+    },
+    {
+     "name": "Semantic Kernel",
+     "kind": "vendor"
+    },
+    {
+     "name": "LangGraph",
+     "kind": "vendor"
+    },
+    {
+     "name": "CrewAI",
+     "kind": "vendor"
+    },
+    {
+     "name": "LlamaIndex Agents",
+     "kind": "vendor"
+    }
+   ],
+   "rows": [
+    [
+     "2",
+     "2",
+     "4",
+     "2",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "2",
+     "2",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "3",
+     "2",
+     "4",
+     "3",
+     "2"
+    ],
+    [
+     "2",
+     "3",
+     "3",
+     "2",
+     "3"
+    ],
+    [
+     "2",
+     "2",
+     "4",
+     "3",
+     "3"
+    ],
+    [
+     "2",
+     "2",
+     "4",
+     "2",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "2",
+     "2",
+     "3"
+    ],
+    [
+     "2",
+     "2",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "1",
+     "2",
+     "4",
+     "3",
+     "2"
+    ]
+   ],
+   "totals": [
+    "55.0%",
+    "57.5%",
+    "85.0%",
+    "65.0%",
+    "62.5%"
+   ],
+   "takeaway": "LangGraph is the best fit (85.0%), leading on durable checkpointed state, native interrupt/resume for human approval, debug/eval tooling and a stable 1.x API, and should be the primary standard. CrewAI (65.0%) is a sanctioned exception for low-risk role-based automation, LlamaIndex is used as a document/retrieval component, and Microsoft Agent Framework replaces Semantic Kernel and AutoGen (neither should be chosen for new work) as the .NET path. Key risk: LangGraph tracing is LangSmith-first, so the standard must mandate OTel export and secure BAA or self-hosted LangSmith.",
+   "platformNote": "Snowflake is the governed data and context layer rather than an agent framework: agents should reach PHI via Cortex Agents, Cortex Search and Cortex Analyst (as MCP tools or through langchain-snowflake), with checkpoints, traces and eval results landing in Snowflake."
+  },
+  {
+   "name": "MCP Ecosystems",
+   "tag": "Governed tool access to EHR, FHIR, Snowflake with least privilege",
+   "report": "OUTPUTS/ipaas/compare_mcp_vendors.md",
+   "features": [
+    {
+     "name": "Spec Compliance & Currency",
+     "lookFor": "Current MCP spec, streamable HTTP, OAuth 2.1 auth, fast spec updates",
+     "why": "Stale implementations break interoperability and security"
+    },
+    {
+     "name": "Enterprise Registry & Discovery",
+     "lookFor": "Private curated registry: owner, version, data class, scopes, lifecycle",
+     "why": "Prevents shadow MCP; one inventory of PHI tools"
+    },
+    {
+     "name": "Delegated Auth & Scopes",
+     "lookFor": "IdP OAuth, on-behalf-of tokens, per-tool scopes, no static keys",
+     "why": "Agent access matches user entitlements for PHI, audit"
+    },
+    {
+     "name": "Central Gateway & Policy",
+     "lookFor": "Gateway enforcing allow/deny lists, parameter validation, rate limits, DLP",
+     "why": "One control point for all agent-to-tool traffic"
+    },
+    {
+     "name": "MCP Threat Protection",
+     "lookFor": "Defenses for tool poisoning, prompt injection, rug-pull, confused deputy",
+     "why": "One compromised tool can exfiltrate PHI"
+    },
+    {
+     "name": "Healthcare & Enterprise Servers",
+     "lookFor": "Supported servers for Snowflake, FHIR/EHR, claims, ServiceNow, M365, CRM",
+     "why": "Removes custom connector work; reveals build gaps"
+    },
+    {
+     "name": "Hosting Flexibility",
+     "lookFor": "Kubernetes, serverless, managed or on-prem hosting; controlled local servers",
+     "why": "Portability, data residency, tools near on-prem EHR"
+    },
+    {
+     "name": "Tool-Call Observability & Audit",
+     "lookFor": "Per-call logs with PHI masking, OpenTelemetry export, tamper-evident retention",
+     "why": "Chain of custody for HIPAA audits, investigations"
+    },
+    {
+     "name": "Server Dev Lifecycle",
+     "lookFor": "SDKs, templates, contract tests, CI/CD, versioning, OpenAPI-to-MCP wrapping",
+     "why": "Turns existing APIs into governed tools repeatably"
+    },
+    {
+     "name": "FinOps & Usage Analytics",
+     "lookFor": "Per-tool/agent metering, quotas, downstream cost attribution, adoption dashboards",
+     "why": "Controls hidden downstream costs; shows value by domain"
+    }
+   ],
+   "columns": [
+    {
+     "name": "Custom MCP Servers",
+     "kind": "vendor"
+    },
+    {
+     "name": "GitHub MCP Server",
+     "kind": "vendor"
+    },
+    {
+     "name": "Microsoft MCP",
+     "kind": "vendor"
+    },
+    {
+     "name": "AWS Bedrock AgentCore",
+     "kind": "vendor"
+    },
+    {
+     "name": "Ref: Snowflake-managed MCP",
+     "kind": "platformRef"
+    }
+   ],
+   "rows": [
+    [
+     "4",
+     "3",
+     "3",
+     "4",
+     "2"
+    ],
+    [
+     "2",
+     "2",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "2",
+     "3",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "2"
+    ],
+    [
+     "1",
+     "2",
+     "2",
+     "3",
+     "2"
+    ],
+    [
+     "1",
+     "1",
+     "3",
+     "2",
+     "3"
+    ],
+    [
+     "4",
+     "3",
+     "3",
+     "2",
+     "2"
+    ],
+    [
+     "1",
+     "1",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "1",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "1",
+     "1",
+     "3",
+     "3",
+     "3"
+    ]
+   ],
+   "totals": [
+    "50.0%",
+    "47.5%",
+    "72.5%",
+    "75.0%",
+    "57.5%"
+   ],
+   "takeaway": "Best fit is a cloud MCP gateway ecosystem, with AWS Bedrock AgentCore (75.0%) and Microsoft (72.5%) effectively tied; pick the one matching the primary hyperscaler and identity estate. Custom MCP Servers are the build standard for FHIR/claims domain servers and GitHub MCP Server is a sanctioned SDLC server, but both must sit behind the gateway and private registry. Key risks are shadow MCP, PHI leakage through tool responses (APIM cannot inspect streaming bodies) and MCP-specific threats like tool poisoning.",
+   "platformNote": ""
+  },
+  {
+   "name": "RAG Frameworks",
+   "tag": "Permission-aware, cited answers over medical policies, benefits, clinical content",
+   "report": "OUTPUTS/ipaas/compare_rag_vendors.md",
+   "features": [
+    {
+     "name": "Document Ingestion & Parsing",
+     "lookFor": "Layout-aware parsing of PDFs, scans/OCR, tables, forms, C-CDA",
+     "why": "Parsing quality caps retrieval quality"
+    },
+    {
+     "name": "Chunking & Embedding Flexibility",
+     "lookFor": "Semantic/hierarchical chunking, metadata enrichment, pluggable embedding models",
+     "why": "Tune per content type; avoid embedding lock-in"
+    },
+    {
+     "name": "Hybrid Retrieval & Re-Ranking",
+     "lookFor": "BM25 plus vector, metadata filters, re-rankers, query rewriting",
+     "why": "Exact codes and dates need keyword precision"
+    },
+    {
+     "name": "Permission-Aware Retrieval",
+     "lookFor": "Source ACL trimming, identity propagation, PHI-aware filters, permission sync",
+     "why": "Never surface records users cannot see"
+    },
+    {
+     "name": "Grounding & Citations",
+     "lookFor": "Passage-level citations, faithfulness checks, confidence, safe refusal",
+     "why": "Verifiable answers build clinician trust"
+    },
+    {
+     "name": "RAG Evaluation",
+     "lookFor": "Context precision/recall, faithfulness metrics, golden sets, A/B tests",
+     "why": "Measured quality justifies scale-up, catches regressions"
+    },
+    {
+     "name": "Freshness & Incremental Indexing",
+     "lookFor": "Change-driven re-index, delete propagation, effective-dated versions, SLAs",
+     "why": "Stale policy answers create compliance risk"
+    },
+    {
+     "name": "Advanced / Agentic Retrieval",
+     "lookFor": "Agentic multi-step, text-to-SQL, GraphRAG, multimodal retrieval",
+     "why": "Questions span documents and structured data"
+    },
+    {
+     "name": "Portability & Platform Proximity",
+     "lookFor": "Model/store agnostic; in-platform retrieval like Snowflake Cortex Search",
+     "why": "Keeps PHI governed and avoids lock-in"
+    },
+    {
+     "name": "Cost & Performance Efficiency",
+     "lookFor": "Embedding/index cost controls, caching, token efficiency, latency SLAs",
+     "why": "Keeps enterprise-wide rollout economical"
+    }
+   ],
+   "columns": [
+    {
+     "name": "LangChain",
+     "kind": "vendor"
+    },
+    {
+     "name": "LlamaIndex",
+     "kind": "vendor"
+    },
+    {
+     "name": "Semantic Kernel",
+     "kind": "vendor"
+    },
+    {
+     "name": "Haystack",
+     "kind": "vendor"
+    },
+    {
+     "name": "Azure AI Search",
+     "kind": "vendor"
+    },
+    {
+     "name": "Ref: Snowflake Cortex Search",
+     "kind": "platformRef"
+    }
+   ],
+   "rows": [
+    [
+     "2",
+     "4",
+     "1",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "3",
+     "3",
+     "2",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "2",
+     "3",
+     "4",
+     "3"
+    ],
+    [
+     "1",
+     "2",
+     "1",
+     "1",
+     "3",
+     "2"
+    ],
+    [
+     "2",
+     "3",
+     "2",
+     "2",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "2",
+     "1",
+     "3",
+     "2",
+     "3"
+    ],
+    [
+     "2",
+     "2",
+     "1",
+     "2",
+     "3",
+     "3"
+    ],
+    [
+     "4",
+     "3",
+     "2",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "4",
+     "3",
+     "3",
+     "4",
+     "1",
+     "3"
+    ],
+    [
+     "2",
+     "3",
+     "2",
+     "3",
+     "2",
+     "3"
+    ]
+   ],
+   "totals": [
+    "65.0%",
+    "70.0%",
+    "42.5%",
+    "67.5%",
+    "67.5%",
+    "67.5%"
+   ],
+   "takeaway": "LlamaIndex (70.0%) is the best-fit RAG framework standard thanks to its best-in-class parsing of table-heavy and scanned healthcare documents, with Snowflake Cortex Search recommended as the default governed retrieval index for PHI content. Haystack (alternative framework for sovereign/on-prem use) and Azure AI Search (exception path for SharePoint-centric, permission-critical corpora) tie at 67.5%, while LangChain/LangGraph serves as the agent-orchestration layer and Semantic Kernel should not be a new standard. Key risk: permission-aware retrieval is weak across most frameworks, and Azure AI Search copies PHI out of Snowflake and relies on Preview ACL features.",
+   "platformNote": ""
+  },
+  {
+   "name": "Vector Search",
+   "tag": "Secure embedding search for RAG, semantic search and agent memory",
+   "report": "OUTPUTS/ipaas/compare_vector_search_vendors.md",
+   "features": [
+    {
+     "name": "Performance & Scale",
+     "lookFor": "Proven ANN recall/latency at 100M–1B+ vectors, high QPS, scaling",
+     "why": "Large indexes drive user experience and infrastructure cost"
+    },
+    {
+     "name": "Hybrid Search & Filtering",
+     "lookFor": "Vector plus BM25/sparse fusion; metadata filtering without recall collapse",
+     "why": "Exact identifiers and filters make results accurate, compliant"
+    },
+    {
+     "name": "Security & HIPAA Readiness",
+     "lookFor": "RBAC, doc-level security, CMK encryption, private networking, audit, BAA",
+     "why": "Embeddings and chunks can reveal PHI"
+    },
+    {
+     "name": "Deployment Portability",
+     "lookFor": "Managed SaaS, BYOC, self-hosted/on-prem, and in-platform vector options",
+     "why": "Avoids lock-in; in-platform search removes separate systems"
+    },
+    {
+     "name": "Multi-Tenancy & Isolation",
+     "lookFor": "Per-tenant isolation, quotas, noisy-neighbor protection, per-tenant backup/restore",
+     "why": "Enables federated domain adoption on a shared service"
+    },
+    {
+     "name": "Index Types & Compression",
+     "lookFor": "HNSW/IVF/DiskANN, quantization, tiered storage, sparse/multi-vector support",
+     "why": "Compression and tiering cut memory cost at scale"
+    },
+    {
+     "name": "Real-Time Updates & Deletes",
+     "lookFor": "Low-latency upserts/deletes, consistency, streaming/CDC ingest, re-embedding",
+     "why": "Freshness and right-to-delete need immediate, reliable deletes"
+    },
+    {
+     "name": "Embedding & Ecosystem Integration",
+     "lookFor": "Built-in embeddings, SDKs, LangChain/LlamaIndex, MCP, Snowflake/Kafka integrations",
+     "why": "Less glue code, faster delivery across domains"
+    },
+    {
+     "name": "Reliability, HA/DR",
+     "lookFor": "Replication, multi-AZ/region, backups/PITR, zero-downtime upgrades, SLAs, observability",
+     "why": "Vector search becomes tier-1 clinical infrastructure"
+    },
+    {
+     "name": "FinOps & Pricing",
+     "lookFor": "Clear pricing, per-index/tenant cost attribution, scale-to-zero, forecasting",
+     "why": "Supports chargeback and avoids budget surprises"
+    }
+   ],
+   "columns": [
+    {
+     "name": "Azure AI Search",
+     "kind": "vendor"
+    },
+    {
+     "name": "Elasticsearch",
+     "kind": "vendor"
+    },
+    {
+     "name": "Amazon OpenSearch",
+     "kind": "vendor"
+    },
+    {
+     "name": "Pinecone",
+     "kind": "vendor"
+    },
+    {
+     "name": "Weaviate",
+     "kind": "vendor"
+    },
+    {
+     "name": "Qdrant",
+     "kind": "vendor"
+    },
+    {
+     "name": "Ref: Snowflake Cortex Search / VECTOR",
+     "kind": "platformRef"
+    }
+   ],
+   "rows": [
+    [
+     "3",
+     "4",
+     "4",
+     "4",
+     "3",
+     "4",
+     "2"
+    ],
+    [
+     "4",
+     "4",
+     "3",
+     "3",
+     "4",
+     "4",
+     "3"
+    ],
+    [
+     "4",
+     "3",
+     "4",
+     "3",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "1",
+     "4",
+     "3",
+     "2",
+     "4",
+     "4",
+     "2"
+    ],
+    [
+     "2",
+     "2",
+     "3",
+     "3",
+     "4",
+     "4",
+     "3"
+    ],
+    [
+     "3",
+     "4",
+     "4",
+     "2",
+     "4",
+     "4",
+     "1"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "4",
+     "4",
+     "3",
+     "4",
+     "3",
+     "3",
+     "3"
+    ],
+    [
+     "2",
+     "4",
+     "3",
+     "3",
+     "3",
+     "3",
+     "2"
+    ],
+    [
+     "2",
+     "2",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3"
+    ]
+   ],
+   "totals": [
+    "70.0%",
+    "85.0%",
+    "82.5%",
+    "75.0%",
+    "85.0%",
+    "87.5%",
+    "60.0%"
+   ],
+   "takeaway": "Qdrant (87.5%) is the best fit as the portable enterprise vector standard, with Elasticsearch (85.0%) as co-leader where hybrid lexical search and query-time document-level security matter most; the Tier 1 choice between them should be settled by PoC. Amazon OpenSearch and Azure AI Search remain sanctioned exceptions for AWS-native Bedrock and M365/SharePoint RAG, Weaviate fits heavily multi-tenant use but has limited HIPAA scope, and Pinecone carries the highest lock-in and corporate uncertainty. Snowflake Cortex Search should be the Tier 0 default for Snowflake-resident corpora; the key risks are PHI leakage without query-time trimming and lock-in, mitigated by keeping chunks and embeddings in Snowflake as the system of record.",
+   "platformNote": ""
+  },
+  {
+   "name": "Gateway, Observability",
+   "tag": "AI control plane: model routing, cost control, tracing, HIPAA audit",
+   "report": "OUTPUTS/ipaas/compare_ai_gateway_obs_vendors.md",
+   "features": [
+    {
+     "name": "Multi-Model Routing & Failover",
+     "lookFor": "One API, policy-based routing, fallback, load balancing, version pinning",
+     "why": "Decouples apps from providers; resilience and cost savings"
+    },
+    {
+     "name": "PHI Guardrails & Content Safety",
+     "lookFor": "Inline PHI/PII redaction, prompt-injection detection, output moderation",
+     "why": "One enforceable HIPAA control point for AI traffic"
+    },
+    {
+     "name": "Identity, Access & Quotas",
+     "lookFor": "SSO, virtual keys per team, model allowlists, rate/token limits",
+     "why": "Stops unmanaged AI use; controls PHI-eligible models"
+    },
+    {
+     "name": "Cost Attribution & Budgets",
+     "lookFor": "Real-time token/cost by app/team/domain, budgets, alerts, chargeback",
+     "why": "Essential for FinOps and domain ROI"
+    },
+    {
+     "name": "Semantic & Response Caching",
+     "lookFor": "Exact and semantic caching, PHI-safe scoping, hit analytics",
+     "why": "Cuts latency and cost without cross-user PHI leakage"
+    },
+    {
+     "name": "End-to-End OTel Tracing",
+     "lookFor": "Traces across LLM, retrieval, tool/MCP, agent hops; OTel GenAI",
+     "why": "One view to debug agent and RAG flows"
+    },
+    {
+     "name": "Evaluation & Quality Monitoring",
+     "lookFor": "Automated evaluators, human feedback, drift and regression detection",
+     "why": "Proves production quality holds; catches degradation early"
+    },
+    {
+     "name": "Audit Logging & Retention",
+     "lookFor": "Immutable prompt/response logs, PHI masking, retention, SIEM/Snowflake export",
+     "why": "Supports HIPAA audit, incident response, AI regulation"
+    },
+    {
+     "name": "Agent & MCP Traffic Governance",
+     "lookFor": "MCP/A2A policy, tool allowlists, anomaly detection, runaway-cost protection",
+     "why": "Governs chains of agent actions, not just calls"
+    },
+    {
+     "name": "Deployment Portability & Overhead",
+     "lookFor": "Self-host/BYOC, open-source core, HA, minimal added latency",
+     "why": "In every request path; must keep PHI in-perimeter"
+    }
+   ],
+   "columns": [
+    {
+     "name": "Azure (APIM + Foundry)",
+     "kind": "vendor"
+    },
+    {
+     "name": "Amazon Bedrock",
+     "kind": "vendor"
+    },
+    {
+     "name": "Kong AI Gateway",
+     "kind": "vendor"
+    },
+    {
+     "name": "LangSmith",
+     "kind": "vendor"
+    },
+    {
+     "name": "Arize (AX + Phoenix)",
+     "kind": "vendor"
+    },
+    {
+     "name": "Fiddler AI",
+     "kind": "vendor"
+    },
+    {
+     "name": "Ref: Snowflake Cortex AI",
+     "kind": "platformRef"
+    }
+   ],
+   "rows": [
+    [
+     "3",
+     "2",
+     "4",
+     "1",
+     "0",
+     "0",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "1",
+     "1",
+     "4",
+     "2"
+    ],
+    [
+     "4",
+     "3",
+     "4",
+     "2",
+     "1",
+     "1",
+     "3"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "3",
+     "2",
+     "1",
+     "3"
+    ],
+    [
+     "3",
+     "1",
+     "3",
+     "0",
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "3",
+     "3",
+     "2",
+     "4",
+     "4",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "1",
+     "4",
+     "4",
+     "3",
+     "2"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "2",
+     "2",
+     "3",
+     "3"
+    ],
+    [
+     "3",
+     "3",
+     "4",
+     "2",
+     "2",
+     "2",
+     "1"
+    ],
+    [
+     "2",
+     "1",
+     "4",
+     "3",
+     "3",
+     "3",
+     "2"
+    ]
+   ],
+   "totals": [
+    "75.0%",
+    "62.5%",
+    "77.5%",
+    "55.0%",
+    "47.5%",
+    "50.0%",
+    "50.0%"
+   ],
+   "takeaway": "Best fit is Kong AI Gateway (#1, 77.5%) as the neutral, self-hosted control point for all model, MCP and A2A traffic, paired with Arize AX + Phoenix for tracing and evaluation (combined 90%), with Snowflake as the audit and analytics sink. Azure APIM + Foundry (#2, 75%) is the strongest single-suite exception path for Azure workloads, Bedrock should be consumed through Kong, LangSmith is the alternative observability choice, and Fiddler is the named PHI-guardrail add-on. Key risk is PHI redaction efficacy and unverified BAA terms for Kong and Arize, which the PoC must confirm.",
+   "platformNote": ""
+  }
+ ],
+ "synthesis": {
+  "platformFit": [
+   {
+    "pattern": "Agent Platforms",
+    "fit": "Partial",
+    "layer": "Gold / Consumption",
+    "native": "Cortex Agents orchestrate Cortex Analyst (semantic views) and Cortex Search over governed Gold data. Snowflake Intelligence (GA) is the business UI. RBAC, masking and row policies are inherited, Agent Identity is GA, and evaluations and OTel traces are stored in AI_OBSERVABILITY_EVENTS.",
+    "gap": "Covers data agents only: no HITL, no A2A, no PHI guardrails. Complement: one agent platform on the primary cloud (Foundry + Copilot Studio on the existing Entra/M365 estate), which calls Cortex Agents through MCP."
+   },
+   {
+    "pattern": "Agent Frameworks",
+    "fit": "Gap",
+    "layer": "Consumption",
+    "native": "Snowflake is not an orchestration framework. It supplies governed tools through langchain-snowflake (SnowflakeCortexAgent) and Cortex Search/Analyst as MCP tools. It can hold checkpoints, traces and TruLens evaluation results with enterprise retention policies.",
+    "gap": "Standardize on open-source LangGraph (no vendor contract), with Microsoft Agent Framework for .NET. Use LangSmith only self-hosted or under a BAA. Otherwise send OTel to the chosen observability tool."
+   },
+   {
+    "pattern": "MCP Ecosystems",
+    "fit": "Partial",
+    "layer": "Gold / Consumption",
+    "native": "The GA Snowflake-managed MCP server exposes Cortex Agents, Analyst, Search, SQL and UDF/procedure tools under RBAC, masking, row policies and Entra/Okta OAuth. Native Apps (GA) package and distribute governed MCP servers.",
+    "gap": "No enterprise gateway or registry for non-Snowflake servers. Tools only, one spec revision behind. Complement: reuse the Pattern 6 gateway (Kong, or APIM + API Center / AgentCore Gateway) instead of adding an MCP-only vendor."
+   },
+   {
+    "pattern": "RAG Frameworks",
+    "fit": "Strong",
+    "layer": "Silver → Gold",
+    "native": "AI_PARSE_DOCUMENT (OCR/LAYOUT, 2,000 pages) and AI_EXTRACT parse into Silver. SPLIT_TEXT chunking and Cortex Search hybrid retrieval with incremental TARGET_LAG refresh run on Gold. Cortex Agents combine Search with Analyst. TruLens RAG-triad evaluation is built in.",
+    "gap": "Owner's-rights permission trimming, a limited embedding catalog, and SharePoint/ECM content must be landed first. Complement: open-source LlamaIndex for complex parsing. Azure AI Search only for permission-critical SharePoint corpora."
+   },
+   {
+    "pattern": "Vector Search",
+    "fit": "Partial",
+    "layer": "Gold",
+    "native": "Cortex Search does managed hybrid vector + keyword + rerank (up to 400M rows per service). The native VECTOR type supports similarity functions, with Arctic/Voyage embeddings via EMBED_TEXT. Chunks and embeddings stay in Snowflake as the system of record under the BAA.",
+    "gap": "Default 20 QPS per service, no index or quantization control, minute-level lag, owner's rights. Complement: one portable Tier 1 engine (prefer Elasticsearch if already run; otherwise Qdrant), only where the PoC shows the ceilings are hit."
+   },
+   {
+    "pattern": "Gateway, Observability",
+    "fit": "Partial",
+    "layer": "All layers (audit sink) / Consumption",
+    "native": "Cortex AI Observability (TruLens traces and evaluations), Cortex AI Guardrails, AI_REDACT, Cortex usage-history views and budgets. Horizon-governed tables serve as the long-term audit, retention and chargeback sink for all AI telemetry.",
+    "gap": "No cross-platform model/MCP/A2A gateway, semantic cache or clinical PHI guardrails. Complement: Kong AI Gateway plus Arize (Phoenix OSS first), both streaming telemetry into Snowflake."
+   }
+  ],
+  "currentTech": [],
+  "engage": [
+   "One AI gateway / control plane (Kong AI Gateway, or Azure APIM + API Center if Azure-first) that also acts as the MCP/A2A gateway and private registry: one vendor covers Patterns 3 and 6.",
+   "One general-purpose agent platform matched to the primary hyperscaler (Microsoft Foundry Agent Service + Copilot Studio on the existing Entra/M365 estate), used for HITL, A2A and non-data agents, with Cortex Agents as the governed data agent behind it via MCP.",
+   "One trace/evaluation vendor under a BAA: Arize AX with Phoenix OSS first, or self-hosted LangSmith if LangGraph dominates. Pick one, not both, and export all traces to Snowflake.",
+   "Conditional: one Tier 1 vector engine (Elasticsearch if already licensed for logs/SIEM, otherwise Qdrant), only if the PoC shows Cortex Search QPS, scale or document-level trimming limits are hit."
+  ],
+  "avoid": [
+   "Pinecone, Weaviate and per-pilot vector databases: Cortex Search and the native VECTOR type cover Tier 0 retrieval inside the lakehouse with no data copy and no new BAA.",
+   "Separate commercial RAG platforms, and Azure AI Search as a default index: Cortex Search + AI_PARSE_DOCUMENT/AI_EXTRACT cover governed RAG. LlamaIndex/Haystack are used as open-source libraries, not contracts.",
+   "Paid framework platforms (CrewAI Enterprise/Factory, LlamaAgents) and AutoGen/Semantic Kernel for new work: LangGraph OSS is the standard, with Microsoft Agent Framework only as the .NET path.",
+   "Stand-alone MCP gateway vendors, and Fiddler as a separate purchase: defer until the PoC shows the chosen gateway's PII sanitizer plus cloud guardrails (Bedrock Guardrails, AI_REDACT) fall short on PHI recall."
+  ],
+  "consolidation": [
+   "Snowflake covers RAG natively (Strong): AI_PARSE_DOCUMENT/AI_EXTRACT feed Silver, Cortex Search indexes Gold, and Cortex Agents combine documents with claims data via Analyst. Make it the default governed retrieval path for PHI.",
+   "Make Snowflake the Tier 0 vector store and the system of record for chunks and embeddings. Any Tier 1 engine is a rebuildable derived index, which limits lock-in and vendor count.",
+   "Expose all governed data to agents only through Snowflake-managed MCP servers and Cortex Agents, so every agent platform and framework inherits RBAC, masking and row policies instead of querying data directly.",
+   "Buy one vendor per remaining gap: a single gateway that serves both model and MCP traffic, a single agent platform aligned to the primary cloud, and a single observability tool. LangGraph is open source and needs no contract.",
+   "Land all AI telemetry, costs and evaluation results in Snowflake (Snowpipe Streaming) so audit, retention and domain chargeback use existing Horizon governance and credit FinOps instead of a separate analytics tool."
+  ]
+ }
+}

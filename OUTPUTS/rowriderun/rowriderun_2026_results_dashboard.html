@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Row-Ride-Run 2026 Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#F4F6FA;
+  --panel:#FFFFFF;
+  --side:#EAF0F7;
+  --line:#DCE3EC;
+  --ink:#27313D;
+  --muted:#667384;
+  --accent:#4E6F97;
+  --accent-soft:#DDE7F3;
+  --row:#CFE5F1;   --row-ink:#2F6A88;
+  --ride:#D6EDD8;  --ride-ink:#3C7446;
+  --run:#F8DDCC;   --run-ink:#9A5431;
+  --male:#DCE6F7;  --male-ink:#3D5E92;
+  --female:#EEDFF2;--female-ink:#81508F;
+  --gold:#F6E7B4;  --silver:#E6E9EE; --bronze:#F1DCC8;
+  --warn:#FFF3D6;  --warn-ink:#8A6414;
+  --display:"Outfit","Trebuchet MS",Verdana,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font:14px/1.5 var(--body)}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+/* ---------- sidebar ---------- */
+aside{background:var(--side);border-right:1px solid var(--line);padding:28px 20px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;flex-direction:column;gap:4px}
+.brand .mark{display:flex;gap:5px}
+.brand .mark span{height:6px;flex:1;border-radius:3px}
+.brand h1{font:700 22px/1.15 var(--display);margin:8px 0 0;letter-spacing:-.01em;text-wrap:balance}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+.label{font:600 11px/1 var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.bigcount{font:700 52px/1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums}
+.countblock{display:flex;flex-direction:column;gap:8px}
+.gbar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--panel)}
+.gbar i{display:block}
+.gstats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gstat{background:var(--panel);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.gstat b{font:700 26px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.gstat.m b{color:var(--male-ink)} .gstat.f b{color:var(--female-ink)}
+.gstat small{color:var(--muted);font-size:12px}
+.facts{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.facts div{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.facts span{color:var(--muted)}
+.facts b{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
+.legs{display:flex;flex-direction:column;gap:6px}
+.leg{display:flex;align-items:center;gap:8px;font-size:13px}
+.leg i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* ---------- main ---------- */
+main{padding:28px 32px 48px;display:flex;flex-direction:column;gap:28px;min-width:0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.head h2{font:600 28px/1.15 var(--display);margin:0;letter-spacing:-.01em}
+.head p{margin:4px 0 0;color:var(--muted)}
+.dates{font:500 13px var(--mono);background:var(--panel);border:1px solid var(--line);padding:6px 12px;border-radius:999px;color:var(--accent)}
+/* search */
+.search{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 24px -14px rgba(46,72,104,.25)}
+.search label{font:600 16px var(--display)}
+.inputwrap{position:relative}
+.inputwrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+#q{width:100%;font:16px var(--body);padding:13px 40px 13px 42px;border:1.5px solid var(--line);border-radius:12px;background:var(--ground);color:var(--ink);outline:none;transition:border-color .15s, background .15s}
+#q:focus{border-color:var(--accent);background:var(--panel)}
+#clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:6px}
+#clear:focus-visible{outline:2px solid var(--accent)}
+.hint{color:var(--muted);font-size:13px;margin:0}
+.matches{display:flex;flex-wrap:wrap;gap:8px}
+.match{border:1px solid var(--line);background:var(--ground);border-radius:999px;padding:6px 12px 6px 6px;cursor:pointer;display:flex;align-items:center;gap:8px;font:14px var(--body);color:var(--ink);transition:background .12s,border-color .12s}
+.match:hover,.match[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.match:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.match .rk{font:500 12px var(--mono);background:var(--panel);border-radius:999px;padding:2px 8px;color:var(--accent)}
+.match mark{background:var(--gold);color:inherit;border-radius:2px;padding:0 1px}
+.empty{background:var(--warn);color:var(--warn-ink);border-radius:10px;padding:12px 14px;font-size:14px}
+/* profile */
+.profile{border-top:1px dashed var(--line);padding-top:18px;display:flex;flex-direction:column;gap:16px}
+.ptop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.pname{font:700 26px/1.15 var(--display);margin:0}
+.chip{display:inline-block;font:600 11px/1 var(--body);letter-spacing:.07em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
+.chip.m{background:var(--male);color:var(--male-ink)} .chip.f{background:var(--female);color:var(--female-ink)}
+.ranks{display:flex;gap:10px;flex-wrap:wrap}
+.rankbox{background:var(--accent-soft);border-radius:12px;padding:10px 14px;min-width:112px}
+.rankbox b{font:700 28px/1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums}
+.rankbox b small{font:500 14px var(--body);color:var(--muted)}
+.rankbox .label{display:block;margin-bottom:6px}
+.rankbox.total{background:var(--ink)}
+.rankbox.total b{color:#fff;font-family:var(--mono);font-weight:500;font-size:24px}
+.rankbox.total .label{color:#C9D3DF}
+.legsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.legcard{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.legcard .t{font:500 22px var(--mono);font-variant-numeric:tabular-nums}
+.legcard .r{font-size:13px}
+.legcard.row{background:var(--row);color:var(--row-ink)}
+.legcard.ride{background:var(--ride);color:var(--ride-ink)}
+.legcard.run{background:var(--run);color:var(--run-ink)}
+.stack{display:flex;height:14px;border-radius:7px;overflow:hidden}
+.stack i{display:block;height:100%}
+.note{font-size:12px;color:var(--warn-ink);background:var(--warn);padding:8px 12px;border-radius:8px;margin:0}
+/* podiums */
+section h3{font:600 20px var(--display);margin:0 0 4px}
+section .sub{color:var(--muted);margin:0 0 14px;font-size:13px}
+.sechead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sechead .sub{margin:0}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;font:500 13px var(--body);color:var(--muted);padding:5px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.seg button:focus-visible{outline:2px solid var(--accent)}
+.podgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pod{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.pod header{padding:11px 16px;font:600 14px var(--display);display:flex;justify-content:space-between;align-items:center}
+.pod header span{font:400 12px var(--body);opacity:.8}
+.pod ol{list-style:none;margin:0;padding:6px 8px 10px}
+.pod li{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer}
+.pod li:hover{background:var(--ground)}
+.pod li:focus-visible{outline:2px solid var(--accent)}
+.medal{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--display);color:var(--ink)}
+.medal.p1{background:var(--gold)} .medal.p2{background:var(--silver)} .medal.p3{background:var(--bronze)}
+.pod .nm{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pod .nm small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+.pod .tm{font:500 14px var(--mono);font-variant-numeric:tabular-nums}
+.h-overall{background:var(--accent-soft);color:var(--accent)}
+.h-m{background:var(--male);color:var(--male-ink)}
+.h-f{background:var(--female);color:var(--female-ink)}
+.h-row{background:var(--row);color:var(--row-ink)}
+.h-ride{background:var(--ride);color:var(--ride-ink)}
+.h-run{background:var(--run);color:var(--run-ink)}
+/* table */
+.tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:600 11px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--ground);position:sticky;top:0}
+th button{all:unset;cursor:pointer}
+th button:focus-visible{outline:2px solid var(--accent)}
+th button::after{content:" \2195";opacity:.35}
+th button[data-dir="asc"]::after{content:" \2191";opacity:1}
+th button[data-dir="desc"]::after{content:" \2193";opacity:1}
+td.t{font-family:var(--mono)}
+td.tot{font-family:var(--mono);font-weight:500}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--ground)}
+tbody tr.sel{background:var(--accent-soft)}
+.bar{display:flex;width:120px;height:8px;border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%}
+footer{color:var(--muted);font-size:12px}
+@media (max-width:980px){
+  .podgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  aside{border-right:0;border-bottom:1px solid var(--line);padding:20px 16px}
+  main{padding:20px 16px 40px}
+  .podgrid,.legsgrid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside aria-label="Event summary">
+    <div class="brand">
+      <div class="mark" aria-hidden="true"><span style="background:var(--row)"></span><span style="background:var(--ride)"></span><span style="background:var(--run)"></span></div>
+      <h1>Row · Ride · Run</h1>
+      <p>Indoor Triathlon 2026</p>
+    </div>
+    <div class="countblock">
+      <span class="label">Total participants</span>
+      <span class="bigcount" id="cTotal">–</span>
+      <div class="gbar" aria-hidden="true"><i id="barM" style="background:var(--male-ink)"></i><i id="barF" style="background:var(--female-ink)"></i></div>
+      <div class="gstats">
+        <div class="gstat m"><b id="cM">–</b><small>Male</small></div>
+        <div class="gstat f"><b id="cF">–</b><small>Female</small></div>
+      </div>
+    </div>
+    <div class="facts" id="facts"></div>
+    <div class="legs">
+      <span class="label">Disciplines, in order</span>
+      <div class="leg"><i style="background:var(--row)"></i>Row — rowing machine</div>
+      <div class="leg"><i style="background:var(--ride)"></i>Ride — indoor cycle</div>
+      <div class="leg"><i style="background:var(--run)"></i>Run — treadmill run / walk</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="head">
+      <div>
+        <h2>Results dashboard</h2>
+        <p>Search an athlete to see their times and where they placed.</p>
+      </div>
+      <span class="dates">Sep 14 – Sep 16, 2026</span>
+    </div>
+
+    <div class="search" role="search">
+      <label for="q">Find a participant</label>
+      <div class="inputwrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" autocomplete="off" placeholder="Type at least 3 letters of a first or last name…" aria-describedby="hint" aria-controls="matches">
+        <button id="clear" type="button" aria-label="Clear search" hidden>×</button>
+      </div>
+      <p class="hint" id="hint" aria-live="polite">Start typing — matching names appear after 3 characters.</p>
+      <div class="matches" id="matches" role="listbox" aria-label="Matching participants"></div>
+      <div class="profile" id="profile" hidden></div>
+    </div>
+
+    <section aria-labelledby="h-top">
+      <h3 id="h-top">Top 3 — overall and by gender</h3>
+      <p class="sub">Ranked by total time (row + ride + run). Click a name to open their results.</p>
+      <div class="podgrid" id="podMain"></div>
+    </section>
+
+    <section aria-labelledby="h-split">
+      <div class="sechead">
+        <div>
+          <h3 id="h-split">Top 3 — by split</h3>
+          <p class="sub">Fastest individual leg times.</p>
+        </div>
+        <div class="seg" role="group" aria-label="Filter split leaders by gender">
+          <button type="button" data-g="all" aria-pressed="true">All</button>
+          <button type="button" data-g="M" aria-pressed="false">Male</button>
+          <button type="button" data-g="F" aria-pressed="false">Female</button>
+        </div>
+      </div>
+      <div class="podgrid" id="podSplit"></div>
+    </section>
+
+    <section aria-labelledby="h-all">
+      <div class="sechead">
+        <div>
+          <h3 id="h-all">Full results</h3>
+          <p class="sub">Click a column header to sort, or a row to open that athlete.</p>
+        </div>
+        <div class="seg" role="group" aria-label="Filter table by gender" id="tblSeg">
+          <button type="button" data-g="all" aria-pressed="true">All</button>
+          <button type="button" data-g="M" aria-pressed="false">Male</button>
+          <button type="button" data-g="F" aria-pressed="false">Female</button>
+        </div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr>
+            <th><button type="button" data-k="rank" data-dir="asc">Rank</button></th>
+            <th><button type="button" data-k="name">Name</button></th>
+            <th>Gender</th>
+            <th><button type="button" data-k="row">Row</button></th>
+            <th><button type="button" data-k="ride">Ride</button></th>
+            <th><button type="button" data-k="run">Run</button></th>
+            <th><button type="button" data-k="total">Total</button></th>
+            <th>Leg mix</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>Source: RowRideRun-results 2026.xlsx (tabs: RowRideRun Overall, Gender Results, RowRideRun Splits Results). Times are minutes:seconds. Total time is shown as recorded; ties share a rank.</footer>
+  </main>
+</div>
+
+<script>
+const RAW = [["Steve Sikora", "M", "2:45", "8:31", "11:27", "22:43"], ["Michael Albertelli", "M", "3:32", "10:48", "10:52", "25:12"], ["Nate Kotlyn", "M", "3:07", "10:08", "12:34", "25:40"], ["Cesar Garcia-Patino", "M", "2:56", "10:03", "13:16", "26:15"], ["Casey Cornelius", "M", "2:46", "10:39", "13:33", "26:58"], ["Eddy Mora", "M", "2:51", "10:37", "14:42", "28:12"], ["Juan Simons", "M", "3:37", "11:36", "14:16", "29:30"], ["Kartik Iyengar", "M", "3:08", "11:14", "17:42", "32:04"], ["Rajagopal Sampathu", "M", "3:48", "10:27", "18:00", "32:15"], ["Justin Viola", "M", "3:09", "13:17", "16:17", "32:44"], ["Aditya Naik", "M", "3:15", "10:21", "20:02", "33:40"], ["Chad Bentley", "M", "4:01", "14:30", "15:17", "33:48"], ["Dawn Carter", "F", "3:47", "11:47", "18:19", "33:53"], ["Crystal Muzdeka", "F", "3:28", "12:03", "18:54", "34:25"], ["Feroz Khan Pattan", "M", "4:05", "13:48", "17:01", "34:55"], ["Vanessa Ortiz", "F", "4:08", "12:09", "19:25", "35:42"], ["Maressa Byrne", "F", "3:56", "12:12", "19:53", "36:01"], ["Spencer Kahley", "M", "3:32", "14:49", "18:25", "36:46"], ["Sierra Sanne", "F", "3:18", "12:12", "21:16", "36:46"], ["Jay Alligood", "M", "3:45", "12:50", "19:31", "37:06"], ["Abigail VanEssende", "F", "3:25", "11:54", "22:02", "37:21"], ["Lily Aponte", "F", "4:14", "13:30", "19:54", "37:38"], ["Vinson Huynh", "M", "3:08", "13:58", "20:51", "37:57"], ["Kelly Harnage", "F", "3:25", "11:09", "23:51", "38:25"], ["Chantell Jones", "F", "4:04", "11:05", "23:27", "38:36"], ["Kristin Benton", "F", "3:38", "13:39", "22:15", "39:32"], ["Caleigh Molner", "F", "3:38", "11:47", "24:08", "39:33"], ["Nannette Thomas", "F", "3:59", "13:12", "22:47", "39:58"], ["Cindy Briggs", "F", "4:02", "10:48", "25:28", "40:18"], ["Anna Lessig", "F", "4:47", "14:47", "21:49", "40:26"], ["Suvendu Maitra", "M", "4:29", "12:24", "26:14", "43:07"], ["Dorinda Geans-Jay", "F", "4:27", "13:19", "25:31", "43:17"], ["Amandeep Singh", "M", "4:09", "13:46", "25:47", "43:42"], ["Anisha Madnani", "F", "4:14", "14:08", "25:26", "43:49"], ["LaCreasa Wilson", "F", "4:26", "12:16", "27:18", "44:01"], ["Kasey Bennett", "F", "3:51", "11:51", "26:14", "44:09"], ["Harry Voiles", "M", "3:29", "12:14", "31:04", "46:47"], ["Mark Lewis", "M", "4:33", "14:26", "28:03", "47:02"], ["Diana Sandoval", "F", "5:02", "15:39", "26:50", "47:31"], ["Alden Woodard", "M", "4:34", "13:49", "29:41", "48:02"], ["Amit Rajpurkar", "M", "5:26", "15:20", "28:12", "48:59"], ["Aditya Pragada", "F", "4:07", "16:06", "28:38", "49:51"], ["Ramana Nrusimhadevar", "M", "3:54", "17:01", "29:46", "50:41"], ["Linda Dave", "F", "5:15", "14:06", "33:02", "52:23"], ["Betty Velez", "F", "4:18", "14:54", "33:26", "52:38"]];
+const sec = t => { const [m,s] = t.split(':').map(Number); return m*60+s; };
+const fmt = s => Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+const P = RAW.map(([name,g,row,ride,run,total],i)=>({id:i,name,g,row:sec(row),ride:sec(ride),run:sec(run),total:sec(total)}));
+
+// competition ranking (ties share rank)
+function rankBy(list,key){
+  const sorted=[...list].sort((a,b)=>a[key]-b[key]||a.id-b.id);
+  const r=new Map(); sorted.forEach((p,i)=>{ r.set(p.id, i>0&&sorted[i-1][key]===p[key] ? r.get(sorted[i-1].id) : i+1); });
+  return r;
+}
+const KEYS=['total','row','ride','run'];
+const males=P.filter(p=>p.g==='M'), females=P.filter(p=>p.g==='F');
+KEYS.forEach(k=>{
+  const all=rankBy(P,k), gm=rankBy(males,k), gf=rankBy(females,k);
+  P.forEach(p=>{ p['r_'+k]=all.get(p.id); p['g_'+k]=(p.g==='M'?gm:gf).get(p.id); });
+});
+P.forEach(p=>{ p.diff=p.total-(p.row+p.ride+p.run); });
+const N=P.length, NM=males.length, NF=females.length;
+const gLabel = g => g==='M'?'Male':'Female';
+const gSize = g => g==='M'?NM:NF;
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ord = n => n+(['th','st','nd','rd'][(n%100>10&&n%100<14)?0:(n%10<4?n%10:0)]||'th');
+
+// ---------- sidebar ----------
+$('cTotal').textContent=N; $('cM').textContent=NM; $('cF').textContent=NF;
+$('barM').style.width=(NM/N*100)+'%'; $('barF').style.width=(NF/N*100)+'%';
+const avg=a=>Math.round(a.reduce((s,p)=>s+p.total,0)/a.length);
+const med=a=>{const s=a.map(p=>p.total).sort((x,y)=>x-y);const m=s.length>>1;return s.length%2?s[m]:Math.round((s[m-1]+s[m])/2);};
+$('facts').innerHTML=[
+  ['Fastest total',fmt(Math.min(...P.map(p=>p.total)))],
+  ['Median total',fmt(med(P))],
+  ['Average total',fmt(avg(P))],
+  ['Avg — male',fmt(avg(males))],
+  ['Avg — female',fmt(avg(females))],
+].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('');
+
+// ---------- podiums ----------
+function podium(title,cls,list,key,subFn){
+  const top=[...list].sort((a,b)=>a[key]-b[key]||a.id-b.id).slice(0,3);
+  return `<article class="pod"><header class="${cls}">${title}<span>${list.length} athletes</span></header><ol>`+
+    top.map((p,i)=>`<li tabindex="0" data-id="${p.id}"><span class="medal p${i+1}" aria-label="${ord(i+1)} place">${i+1}</span>`+
+      `<span class="nm">${esc(p.name)}<small>${subFn(p)}</small></span><span class="tm">${fmt(p[key])}</span></li>`).join('')+`</ol></article>`;
+}
+const legsLine=p=>`Row ${fmt(p.row)} · Ride ${fmt(p.ride)} · Run ${fmt(p.run)}`;
+$('podMain').innerHTML=
+  podium('Overall','h-overall',P,'total',p=>gLabel(p.g)+' · '+legsLine(p))+
+  podium('Male','h-m',males,'total',legsLine)+
+  podium('Female','h-f',females,'total',legsLine);
+
+let splitG='all';
+function drawSplits(){
+  const list = splitG==='all'?P:P.filter(p=>p.g===splitG);
+  const sub = p=>splitG==='all'?gLabel(p.g)+' · overall '+ord(p.r_total):'overall '+ord(p.r_total);
+  $('podSplit').innerHTML=
+    podium('Row','h-row',list,'row',sub)+
+    podium('Ride','h-ride',list,'ride',sub)+
+    podium('Run','h-run',list,'run',sub);
+}
+drawSplits();
+document.querySelector('section[aria-labelledby="h-split"] .seg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  splitG=b.dataset.g;
+  b.parentNode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  drawSplits();
+});
+
+// ---------- table ----------
+let sortK='rank', sortDir='asc', tblG='all', selId=null;
+function drawTable(){
+  let list = tblG==='all'?[...P]:P.filter(p=>p.g===tblG);
+  const val=p=>sortK==='rank'?p.total:sortK==='name'?p.name.toLowerCase():p[sortK];
+  list.sort((a,b)=>{const x=val(a),y=val(b);return (x<y?-1:x>y?1:a.id-b.id)*(sortDir==='asc'?1:-1);});
+  $('tbody').innerHTML=list.map(p=>{
+    const s=p.row+p.ride+p.run;
+    return `<tr data-id="${p.id}" class="${p.id===selId?'sel':''}"><td>${tblG==='all'?p.r_total:p.g_total}</td><td>${esc(p.name)}</td>`+
+    `<td><span class="chip ${p.g.toLowerCase()}">${gLabel(p.g)}</span></td>`+
+    `<td class="t">${fmt(p.row)}</td><td class="t">${fmt(p.ride)}</td><td class="t">${fmt(p.run)}</td><td class="tot">${fmt(p.total)}</td>`+
+    `<td><div class="bar" title="Share of time per leg"><i style="width:${p.row/s*100}%;background:var(--row-ink);opacity:.55"></i><i style="width:${p.ride/s*100}%;background:var(--ride-ink);opacity:.55"></i><i style="width:${p.run/s*100}%;background:var(--run-ink);opacity:.55"></i></div></td></tr>`;
+  }).join('');
+}
+document.querySelector('thead').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const k=b.dataset.k;
+  sortDir = (sortK===k && sortDir==='asc')?'desc':'asc'; sortK=k;
+  document.querySelectorAll('thead button').forEach(x=>x.removeAttribute('data-dir'));
+  b.dataset.dir=sortDir; drawTable();
+});
+$('tblSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  tblG=b.dataset.g; b.parentNode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  drawTable();
+});
+drawTable();
+
+// ---------- search ----------
+const q=$('q'), matchesEl=$('matches'), hint=$('hint'), profile=$('profile'), clearBtn=$('clear');
+function highlight(name,term){
+  const i=name.toLowerCase().indexOf(term);
+  if(i<0) return esc(name);
+  return esc(name.slice(0,i))+'<mark>'+esc(name.slice(i,i+term.length))+'</mark>'+esc(name.slice(i+term.length));
+}
+function runSearch(){
+  const term=q.value.trim().toLowerCase();
+  clearBtn.hidden=!q.value;
+  matchesEl.innerHTML='';
+  if(term.length===0){ hint.textContent='Start typing — matching names appear after 3 characters.'; return; }
+  if(term.length<3){ hint.textContent=`Keep typing — ${3-term.length} more character${3-term.length>1?'s':''} to search.`; return; }
+  const words=n=>n.toLowerCase().split(/[\s-]+/);
+  const hits=P.filter(p=>p.name.toLowerCase().includes(term))
+    .sort((a,b)=>{ // names where a word starts with the term come first
+      const sa=words(a.name).some(w=>w.startsWith(term))?0:1, sb=words(b.name).some(w=>w.startsWith(term))?0:1;
+      return sa-sb||a.r_total-b.r_total; });
+  if(!hits.length){
+    hint.textContent='';
+    matchesEl.innerHTML=`<div class="empty" role="status">No participant matches “${esc(q.value.trim())}”. Check the spelling, or try part of the last name instead.</div>`;
+    return;
+  }
+  hint.textContent=`${hits.length} match${hits.length>1?'es':''} — select a name to see full results.`;
+  matchesEl.innerHTML=hits.map(p=>`<button type="button" class="match" role="option" aria-selected="${p.id===selId}" data-id="${p.id}"><span class="rk">#${p.r_total}</span>${highlight(p.name,term)}</button>`).join('');
+  if(hits.length===1) showProfile(hits[0].id,false);
+}
+function showProfile(id,scroll=true){
+  const p=P[id]; selId=id;
+  const s=p.row+p.ride+p.run;
+  const leg=(k,label)=>`<div class="legcard ${k}"><span class="label" style="color:inherit;opacity:.8">${label}</span>`+
+    `<span class="t">${fmt(p[k])}</span><span class="r">${ord(p['r_'+k])} of ${N} overall · ${ord(p['g_'+k])} of ${gSize(p.g)} ${gLabel(p.g).toLowerCase()}</span></div>`;
+  const gap = p.r_total>1 ? `${fmt(p.total-Math.min(...P.map(x=>x.total)))} behind the overall winner` : 'Overall winner';
+  profile.innerHTML=
+   `<div class="ptop"><div><p class="pname">${esc(p.name)}</p><span class="chip ${p.g.toLowerCase()}">${gLabel(p.g)}</span> <span class="hint" style="margin-left:6px">${gap}</span></div>`+
+   `<div class="ranks">`+
+     `<div class="rankbox total"><span class="label">Total time</span><b>${fmt(p.total)}</b></div>`+
+     `<div class="rankbox"><span class="label">Overall rank</span><b>${p.r_total}<small> / ${N}</small></b></div>`+
+     `<div class="rankbox"><span class="label">${gLabel(p.g)} rank</span><b>${p.g_total}<small> / ${gSize(p.g)}</small></b></div>`+
+   `</div></div>`+
+   `<div class="legsgrid">${leg('row','Row')}${leg('ride','Ride')}${leg('run','Run')}</div>`+
+   `<div><span class="label">Share of total time</span><div class="stack" style="margin-top:8px">`+
+     `<i style="width:${p.row/s*100}%;background:var(--row)" title="Row ${Math.round(p.row/s*100)}%"></i>`+
+     `<i style="width:${p.ride/s*100}%;background:var(--ride)" title="Ride ${Math.round(p.ride/s*100)}%"></i>`+
+     `<i style="width:${p.run/s*100}%;background:var(--run)" title="Run ${Math.round(p.run/s*100)}%"></i></div></div>`+
+   (Math.abs(p.diff)>5?`<p class="note">Recorded total (${fmt(p.total)}) differs from the sum of the three splits (${fmt(s)}) by ${Math.abs(p.diff)} s in the source sheet. Rank uses the recorded total.</p>`:'');
+  profile.hidden=false;
+  matchesEl.querySelectorAll('.match').forEach(b=>b.setAttribute('aria-selected',+b.dataset.id===id));
+  drawTable();
+  if(scroll) document.querySelector('.search').scrollIntoView({behavior:'smooth',block:'start'});
+}
+q.addEventListener('input',()=>{ runSearch(); });
+q.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){ const f=matchesEl.querySelector('.match'); if(f) showProfile(+f.dataset.id,false); }
+  if(e.key==='ArrowDown'){ const f=matchesEl.querySelector('.match'); if(f){e.preventDefault(); f.focus();} }
+});
+matchesEl.addEventListener('click',e=>{ const b=e.target.closest('.match'); if(b) showProfile(+b.dataset.id,false); });
+matchesEl.addEventListener('keydown',e=>{
+  const b=e.target.closest('.match'); if(!b) return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); (b.nextElementSibling||b).focus(); }
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); (b.previousElementSibling||q).focus(); }
+});
+clearBtn.addEventListener('click',()=>{ q.value=''; profile.hidden=true; selId=null; runSearch(); drawTable(); q.focus(); });
+function openFromElsewhere(id){ q.value=P[id].name; runSearch(); showProfile(id); }
+document.addEventListener('click',e=>{
+  const li=e.target.closest('.pod li, tbody tr'); if(li) openFromElsewhere(+li.dataset.id);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){ const li=e.target.closest('.pod li'); if(li) openFromElsewhere(+li.dataset.id); }
+});
+</script>
+</body>
+</html>
